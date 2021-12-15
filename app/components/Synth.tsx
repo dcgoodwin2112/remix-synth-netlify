@@ -23,7 +23,7 @@ export default function Synth() {
     <div>
       {synthKeys.map(({ buttonNote, label }) => {
         return (
-          <SynthKey {...{ buttonNote, note, setNote }}>
+          <SynthKey key={buttonNote} {...{ buttonNote, note, setNote }}>
             {label}
           </SynthKey>
         );

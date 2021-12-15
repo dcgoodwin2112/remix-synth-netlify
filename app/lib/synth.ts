@@ -6,6 +6,7 @@ interface Options {
 }
 
 let audioCtx: AudioContext;
+let cachedReverb: ConvolverNode;
 export default async function playSynth({
   note = "C4",
   duration = 0.33,
@@ -24,7 +25,12 @@ export default async function playSynth({
     return convolver;
   }
 
-  const reverb = await createReverb();
+  // Performance optimization to avoid extra network requests;
+  const reverb = cachedReverb ?? await createReverb();
+
+  if (!cachedReverb) {
+    cachedReverb = reverb;
+  }
 
   // Reverb Wet/Dry Mix 🎹
 
